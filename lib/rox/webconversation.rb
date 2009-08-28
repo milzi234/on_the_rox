@@ -1,7 +1,7 @@
 require 'net/http'
 require 'uri'
 
-module OX
+module ROX
   class WebConversation
     attr_accessor :cookies
     
