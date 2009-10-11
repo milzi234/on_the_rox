@@ -134,7 +134,7 @@ class ColumnDefinitionsTest < Test::Unit::TestCase
       column(13, :child, :number)
     end
     columns = column_defs[:some_type]
-    assert_equal([:some_common_type], columns.ancestors)
+    assert_equal([column_defs[:some_common_type]], columns.ancestors)
   end
   
   def test_column_definition_with_multiple_ancestors
@@ -153,7 +153,7 @@ class ColumnDefinitionsTest < Test::Unit::TestCase
     end
     
     columns = column_defs[:some_type]
-    assert_equal([:some_common_type, :some_other_common_type], columns.ancestors)
+    assert_equal([column_defs[:some_common_type], column_defs[:some_other_common_type]], columns.ancestors)
   end
   
   

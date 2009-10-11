@@ -59,7 +59,21 @@ module ROX
       return response;
     end
     
+    def put_response(path, parameters = {}) 
+      response = ROX::Response.new(JSON.parse(put(path, parameters)))
+      raise ROX::OXexception.new(response) if response.error?
+      return response
+    end
     
+    def in_module(moduleName, &block)
+      mod = self.module(moduleName)
+      return mod.instance_eval(&block) if block_given?
+      return mod
+    end
+    
+    def module(moduleName)
+      ROX::SimpleModule.new("/ajax/"+moduleName, self)
+    end
   end
   
 end

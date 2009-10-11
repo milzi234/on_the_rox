@@ -1,12 +1,11 @@
 require 'rubygems'
-require 'lib/oxclient'
+require File.dirname(__FILE__)+'/../lib/rox'
 require 'json'
 
-conv = OX::WebConversation.new('localhost')
-response = conv.get("/ajax/login", :action => :login, :name => 'francisco', :password => 'netline')
-
-session = JSON.parse(response)['session']
-
-response = conv.get('/ajax/subscriptions', :action => :all, :session => session, :columns => "id", :folder => "default0/INBOX")
-puts response
-puts "="*80
+ROX::Client.new(:host => "localhost").login("username", "password") do
+  |client|
+  response = client.in_module(:apps) do 
+    install(:app => "com.openexchange.apps.googlemail")
+  end
+  puts response
+end

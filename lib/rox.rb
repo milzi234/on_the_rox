@@ -1,1 +1,10 @@
+require File.dirname(__FILE__)+'/rox/dependencies'
+require File.dirname(__FILE__)+'/rox/rox'
 require File.dirname(__FILE__)+'/rox/webconversation'
+require File.dirname(__FILE__)+'/rox/client'
+require File.dirname(__FILE__)+'/rox/response'
+require File.dirname(__FILE__)+'/rox/exception'
+require File.dirname(__FILE__)+'/rox/config_tree'
+require File.dirname(__FILE__)+'/rox/folders'
+require File.dirname(__FILE__)+'/rox/simple_module'
+
