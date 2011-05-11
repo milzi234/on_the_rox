@@ -8,9 +8,8 @@ module ROX
     def initialize(options = nil)
       if options
           host = options[:host] 
-          port = options[:port] || 80
           raise "Please specify an option 'host'" unless host
-          @webconversation = ROX::WebConversation.new(host, port)
+          @webconversation = ROX::WebConversation.new(host)
       end
     end
     
@@ -61,7 +60,7 @@ module ROX
     
     def put_response(path, parameters = {}) 
       response = ROX::Response.new(JSON.parse(put(path, parameters)))
-      raise ROX::OXexception.new(response) if response.error?
+      raise ROX::OXException.new(response) if response.error?
       return response
     end
     
@@ -72,7 +71,7 @@ module ROX
     end
     
     def module(moduleName)
-      ROX::SimpleModule.new("/ajax/"+moduleName, self)
+      ROX::SimpleModule.new("/ajax/"+moduleName.to_s, self)
     end
   end
   

@@ -1,14 +1,14 @@
 require 'net/http'
-require 'uri'
+require 'net/https'
+require 'open-uri'
 
 module ROX
   class WebConversation
     attr_accessor :cookies
     
-    def initialize(host, port=80)
+    def initialize(uri)
       @cookies = Hash.new
-      @host = host
-      @port = port
+      @uri = URI.parse(uri)
     end
     
     def get(url, params = {})
@@ -47,14 +47,16 @@ module ROX
     def remember_cookies(res)
       setCookie = res['Set-Cookie']
       return unless setCookie
-      cookieDefs = setCookie.split(/,/)
-      cookieDefs.each do
+      cookies = setCookie.split(/\s*[,;]\s*/)
+
+      cookies.each do
         |cookieDef|
-        assignment = cookieDef.split(/;/).first
-        key, value = assignment.split(/\=/)
-        @cookies[key] = value
+          if (cookieDef =~ /^(JS|open-xchange)/)
+            key, value = cookieDef.split(/\=/)
+            @cookies[key] = value
+          end
+        end
       end
-    end
     
     def add_cookies(req)
       return if @cookies.empty?
@@ -80,7 +82,9 @@ module ROX
     
     def request(req)
       add_cookies(req)
-      res = Net::HTTP.start(@host, @port) do
+      http_session = Net::HTTP.new(@uri.host, @uri.port)
+      http_session.use_ssl = @uri.scheme == "https"
+      res = http_session.start do
         |http|
         http.request(req)
       end

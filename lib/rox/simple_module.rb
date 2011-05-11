@@ -14,6 +14,10 @@ module ROX
       @client.put_response(@path, params)
     end
     
+    def call(action, params)
+      _call(action, params)
+    end
+    
     def _call(action, params)
       params[:action] = action
       if(params[:body])

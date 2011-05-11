@@ -1,11 +1,11 @@
-require 'rubygems'
-require File.dirname(__FILE__)+'/../lib/rox'
-require 'json'
+require 'rox'
 
-ROX::Client.new(:host => "localhost").login("username", "password") do
+USER = "..."
+PASSWORD = "..."
+HOST = "https://ox.io"
+
+ROX::Client.new(:host => HOST).login(USER, PASSWORD) do
   |client|
-  response = client.in_module(:apps) do 
-    install(:app => "com.openexchange.apps.googlemail")
-  end
-  puts response
+  # ...
+  
 end

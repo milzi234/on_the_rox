@@ -21,5 +21,9 @@ module ROX
       @oxresponse['data']
     end
     
+    def to_s
+      @oxresponse.inspect
+    end
+    
   end
 end
